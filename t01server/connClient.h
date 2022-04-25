@@ -15,7 +15,8 @@ public:
     connClient();
 
     ~connClient();
-
+    char *  recvData; //缓存 收到的数据
+    int recvlen,recvend;
     // 记录 一下 连接信息 连接的谁
     std::string m_oppositeIP;
     int m_oppositePort;
@@ -25,6 +26,7 @@ public:
 
     void callbackWrite()override;
     void Write();
+    void DealData();
 
 };
 
