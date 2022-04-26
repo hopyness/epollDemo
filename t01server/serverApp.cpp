@@ -4,6 +4,7 @@
 
 #include "serverApp.h"
 #include <iostream>
+#include "timer.h"
 //构造函数
 serverApp::serverApp() {
     isrun= false;
@@ -12,11 +13,25 @@ void serverApp::init() {
     m_lihpHandles.fill(nullptr);
     epoll_fd=epoll_create1(0);
     isrun=true;
+
 }
 void serverApp::run() {
-
+    int64_t starttime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+    int64_t starttime2=starttime;
     while (isrun) {
+        int64_t nowtime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+       if(nowtime-starttime>=10)//不要一直进行 定时器检查 没
+       {
+           starttime=nowtime;
+           for(auto t1:m_timerList)
+           {
+               if(t1->lastTimepos<nowtime)
+               {
+                   t1->timeOut();
+               }
+           }
 
+       }
         int   nfds=epoll_wait(epoll_fd,m_events.data(),maxFiles,500);
         for(int i=0;i<nfds;++i) //处理所发生的所有事件
         {
@@ -34,6 +49,19 @@ void serverApp::run() {
                 m_lihpHandles[tt]->callbackWrite();//写信号 回调写函数
             }
 
+        }
+        //std::cout<<"erassse"<<std::endl;
+        //在epoll结束后进行进行定时器清理
+        for(auto it1=m_timerList.begin();it1!=m_timerList.end();)
+        {
+            if((*it1)->isRun== false)
+            {
+                std::cout<<"erase"<<std::endl;
+                it1=m_timerList.erase(it1);
+            } else
+            {
+                it1++;
+            }
         }
     }
    // std::cout<<"isedn"<<std::endl;

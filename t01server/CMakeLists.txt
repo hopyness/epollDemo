@@ -11,10 +11,11 @@ add_executable(t01server
         connCmd.cpp
         connServer.cpp
         connClient.cpp
+        timer.cpp
 
         main.cpp
 
 
-        )
+       )
 
 target_link_libraries(t01server pthread )

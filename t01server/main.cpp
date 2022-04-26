@@ -21,6 +21,8 @@ using namespace std;
 #include "serverApp.h"
 #include "connServer.h"
 #include "connCmd.h"
+#include "timer.h"
+
 int main(int argc, char *argv[]) {
 
     //创建App
@@ -28,13 +30,17 @@ int main(int argc, char *argv[]) {
     app.init();
 
     //添加一个 监听cmd输入的
-    auto xx=std::make_shared<connCmd>();
+    auto xx = std::make_shared<connCmd>();
     app.addConnHandle(xx);
     // struct  St  qq{4,5};
     //添加监听serever 服务
     auto xx2 = std::make_shared<connServer>();
     xx2->creatFd(6688);
     app.addConnHandle(xx2);
+    {//打括号方便测试 结束后析构函数是否被执行
+        auto t1 = std::make_shared<timer>(0, 3, 3000, []() { std::cout << "timerX" << std::endl; });
+        app.m_timerList.push_back(t1);
+    }
     app.run();
     return 0;
 }
