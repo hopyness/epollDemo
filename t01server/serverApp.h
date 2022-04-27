@@ -33,13 +33,14 @@ public:
     bool delConnHandlebyId(int id);
     //改成公有方便其他访问
     std::array<std::shared_ptr<connHandle>, maxFiles> m_lihpHandles;
+    //定时器函数？
     std::list<std::shared_ptr<timer>>m_timerList;
 private:
-    int epoll_fd;//epoll的文件句柄
-    bool isrun;//运行状态
+    int epoll_fd; //epoll的文件句柄
+    bool isrun; //运行状态
 
     std::array<epoll_event, maxFiles> m_events;
-    //std::array<std::shared_ptr<connHandle>, maxFiles> m_lihpHandles;
+    // std::array<std::shared_ptr<connHandle>, maxFiles> m_lihpHandles;
 };
 
 

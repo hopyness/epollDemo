@@ -115,5 +115,23 @@ void connCmd::CMDdo(const char *x) {
         serverApp* p_app =((serverApp*)this->serverptr);
         p_app->stop();
     }
+    //妈耶 一遍输出 一遍打印   命令不好执行
+    //添加定时器
+    if (strncmp(x, "addtime", 7) == 0) {
+        //   关闭定时器
+        serverApp* p_app =((serverApp*)this->serverptr);
+        auto tt=std::make_shared<timer>(0, 10, 3000, []() { std::cout << "hahhahaha" << std::endl; });
+        p_app->m_timerList.push_back(tt);
+
+    }
+    //添加关闭所有定时器
+    if (strncmp(x, "stoptime", 8) == 0) {
+        //   关闭定时器
+        serverApp* p_app =((serverApp*)this->serverptr);
+        for(auto t:p_app->m_timerList)
+        {
+            t->stop();
+        }
+    }
 
 }
