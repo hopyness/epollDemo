@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package PB.Client_Server;
+
+/*protobuf
+double
+float
+int32
+int64
+uint32
+uint64
+sint32
+sint64
+fixed32
+sfixed32
+sfixed64
+bool
+string
+bytes
+
+*/
+//登录
+message Login
+{
+	enum MsgId { PROTO3 = 0; Id = 2500001; }
+	string uname =1;
+	string pwd =2;
+}
+//登出
+message Logout
+{
+	enum MsgId { PROTO3 = 0; Id = 2500002; }
+
+}
+//查询
+message FindAll
+{
+	enum MsgId { PROTO3 = 0; Id = 2500003; }
+
+}
+//查询
+message FindList
+{
+	enum MsgId { PROTO3 = 0; Id = 2500004; }
+    repeated int32  listId = 1;
+}
