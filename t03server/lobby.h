@@ -30,7 +30,10 @@ struct tabeinfo
 };
 class lobby {
 public://方法
-    lobby();
+    lobby()
+    {}
+    ~lobby()
+    {}
     //addaplayer 添加一个玩家
     //delaplayer  移除一个玩家
     //stargameserver( teebid)

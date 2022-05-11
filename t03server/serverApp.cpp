@@ -13,7 +13,7 @@ void serverApp::init() {
     m_lihpHandles.fill(nullptr);
     epoll_fd=epoll_create1(0);
     isrun=true;
-   // new lobby();
+    sp_lobby = std::make_shared<lobby>();
 }
 void serverApp::run() {
     int64_t starttime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();

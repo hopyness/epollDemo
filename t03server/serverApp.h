@@ -11,6 +11,7 @@
 #include <sys/epoll.h>
 #include <memory>
 #include <list>
+#include "lobby.h"
 //最多添加的文件句柄 也是epoll add的最大值
 constexpr int maxFiles=10000;
 //APP 绑定 epoll  run 运行 就是 死循环调用epollwait
@@ -36,6 +37,7 @@ public:
     //定时器函数？
     std::list<std::shared_ptr<timer>>m_timerList;
 private:
+    std::shared_ptr<lobby> sp_lobby;
     int epoll_fd; //epoll的文件句柄
     bool isrun; //运行状态
 
