@@ -7,8 +7,14 @@ package PB.Server_Client;
 message LoginRet
 {
 	enum MsgId { PROTO3 = 0; Id = 2500011; }
-	//
+
 	int32 type =1;
+	//玩家生成的token  以后建议每次发包 都要用这个校验以下  端口和token是否是绑定关系
+	string token=2;
+	//玩家的钱
+	int32 money=3;
+	// 昵称
+	string  useName=4;
 
 }
 //登出

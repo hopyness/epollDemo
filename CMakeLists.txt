@@ -9,5 +9,9 @@ add_subdirectory(t01client)
 add_subdirectory(t02server)
 add_subdirectory(t02client)
 
+
+add_subdirectory(t03server)
+add_subdirectory(t03client)
+
 add_subdirectory(testFunction)
 #add_subdirectory(client1) epoll4 testC11

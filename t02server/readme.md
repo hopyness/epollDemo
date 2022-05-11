@@ -39,8 +39,8 @@ ubuntu按照  protobuf
  对C++ 而言
  protoc -I=./pbsrc --cpp_out=./pbinclude  ./pbsrc/122.proto
 
-#include <google/protobuf/stubs/status.h>
-#include <google/protobuf/util/json_util.h>
+{ #include <google/protobuf/stubs/status.h>}     
+{#include <google/protobuf/util/json_util.h>} 
 添加这俩个可以调用
 std::string temp;
  google::protobuf::util::MessageToJsonString(*msg, &temp);
