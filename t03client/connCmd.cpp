@@ -3,7 +3,9 @@
 //
 
 #include "connCmd.h"
-
+#include "serverApp.h"
+#include "connClient.h"
+#include "pbhead.h"
 connCmd::connCmd() {
     lihp_fd = STDIN_FILENO;
 }
@@ -46,5 +48,38 @@ void connCmd::CMDdo(const char *x) {
        关闭 服务listen            killsrever
        退出                     quit
      * */
+     //初始化  让cmd 找到 conclient 句柄  以后方便发送数据
+    if (strncmp(x, "init", 4) == 0) {
+        //给所有客户端发送一条消息 --   sendall  1234
+        serverApp* p_app =((serverApp*)this->serverptr);
+        p_app->m_lihpHandles;
+
+        int i=0;
+        for(;i<maxFiles;i++)
+        {
+            if( p_app->m_lihpHandles[i]!= nullptr) {
+
+                std::cout << (p_app->m_lihpHandles[i])->lihp_fd << std::endl;
+                auto  ss =std::dynamic_pointer_cast<connClient>((p_app->m_lihpHandles[i]));//
+                if(ss) //只处理 是客户端的
+                {
+                    connClientX =ss;
+                    std::cout << connClientX->lihp_fd << std::endl;
+                    break;
+                }
+            }
+
+        }
+    }
+    //登录
+    if (strncmp(x, "sendlogin", 9) == 0) {
+        //给所有客户端发送一条消息 --   sendall  1234
+
+       auto  ss=std::make_shared<PB::Client_Server::Login>();
+        ss->set_uname("123");
+        ss->set_pwd("123");
+
+        connClientX->connWrite(PB::Client_Server::Login::Id,ss);
+    }
 
 }

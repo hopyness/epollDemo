@@ -27,20 +27,15 @@ void connClient::callbackRead() {
               std::endl;
     int n = 0;
     char line[9999];
-    if ((
-                n = read(lihp_fd, line, 9999)
-        ) <= 0) {
-        // 读取错误
-        // 不一定是读取错误 一般这个 就是对方关闭了连接
-        //告诉epoll 我已经鸡都鸡了  你们就不要绑定我  我是智能指针 应该会掉自己的析构函数
-        ((serverApp *) this->serverptr)->
-                delConnHandlebyId(epollpos);
-        lihp_fd = -1;// 写个-1  让它失效
-    } else {
+
+        std::cout <<  recvData+recvlen<<"::"<<recvend-recvlen<<
+                  std::endl;
         if ((n = read(lihp_fd, recvData+recvlen, recvend-recvlen)) <= 0) {
             // 读取错误
             // 不一定是读取错误 一般这个 就是对方关闭了连接
             //告诉epoll 我已经鸡都鸡了  你们就不要绑定我  我是智能指针 应该会掉自己的析构函数
+            std::cout << " 2" <<
+                      std::endl;
             ((serverApp *) this->serverptr)->delConnHandlebyId(epollpos);
             lihp_fd = -1;// 写个-1  让它失效
         } else {
@@ -53,7 +48,6 @@ void connClient::callbackRead() {
 
 
 
-    };
 }
 void connClient::DealData()
 {
@@ -117,5 +111,37 @@ void connClient::connetfd(std::string ipstr, int prot) {
 
     if (connect(fd2, (sockaddr *) &addr, sizeof(addr)) == -1)
         return;
+
+}
+
+void connClient::connWrite(int id,std::shared_ptr<google::protobuf::Message> msg)
+{
+  //  std::string buff{};
+   // msg->SerializeToString(&buff);
+    int pbLen = msg->ByteSizeLong();
+    char * tt =new char[pbLen+8];
+    msg->SerializeToArray(tt+8, pbLen);
+    (*(int*)(tt))=pbLen;
+    (*(int*)(tt+4))=id;
+   // int a=buff.size();
+    std::cout<<pbLen<< std::endl;
+    write(lihp_fd,tt,pbLen+8);
+
+
+
+        std::string temp;
+        google::protobuf::util::MessageToJsonString(*msg, &temp);
+        std::cout<<temp.c_str();
+
+    for(int xx=0;xx<pbLen+8;xx++)
+    {
+        int xx3=*(tt+xx);
+        std::cout <<"--" <<xx3<< std::endl;
+    }
+   // PB::Client_Server::Login t;
+   // t.uname()
+    auto  ss=std::make_shared<PB::Client_Server::Login>();
+    ss->ParseFromArray(tt+8, pbLen);
+    std::cout<<ss->uname()<<std::endl;
 
 }

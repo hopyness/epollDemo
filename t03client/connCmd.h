@@ -11,6 +11,7 @@
 #include <string.h>
 
 #include "connHandle.h"
+#include "connClient.h"
 class connCmd : public connHandle{
 public:
     connCmd();
@@ -21,10 +22,9 @@ public:
 
     void callbackWrite()override;
 
-
 private:
     void CMDdo(const  char * x);
-
+    std::shared_ptr<connClient> connClientX;
 };
 
 

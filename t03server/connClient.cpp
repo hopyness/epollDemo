@@ -39,7 +39,7 @@ void connClient::callbackRead() {
 void connClient::DealData()
 {
     //如果一次性来多个包
-
+    std::cout << " DealData" << std::endl;
     char * nowRead=recvData;
     char * readEnd=recvData+recvlen;
     int nowReadLen=0;
@@ -47,7 +47,7 @@ void connClient::DealData()
     {
         int dataLen = *(int *) nowRead;  //数据长度
         int datatype = *(int *) (nowRead+4);//数据类型  //比如char*    protobuf  或者以后自己写的序列化？？
-
+        std::cout <<"002" <<datatype<<dataLen << std::endl;
         if(readEnd-nowRead>=dataLen+8) //如果数据完整 才操作 如果不完整 可能要读下一个包了
         {
             // nowRead+8 ~ nowRead+dataLen 就是正常包的数据
@@ -55,15 +55,24 @@ void connClient::DealData()
             switch (datatype) {
                 case PB::Client_Server::Login::Id:
                 {
+                    std::cout <<"0033" << std::endl;
                     auto msg =  std::make_shared<PB::Client_Server::Login>();
-                    if (!msg->ParseFromArray(nowRead+8, dataLen))
+                    for(int xx=0;xx<dataLen+8;xx++)
                     {
+                        int xx3=*(nowRead+xx);
+                        std::cout <<"--" <<xx3<< std::endl;
+                    }
+                    if (!msg->ParseFromArray(nowRead+8, dataLen))
+                    { std::cout <<"44" << std::endl;
                         std::string temp;
-                      //  google::protobuf::util::MessageToJsonString(*msg, &temp);
+                        google::protobuf::util::MessageToJsonString(*msg, &temp);
                         std::cout<<temp.c_str();
 
                         std::string buff{};
                         msg->SerializeToString(&buff);
+
+                    } else{
+                        std::cout <<"reeor" << std::endl;
                     }
                         //PB::Client_Server::Login t=
                 }

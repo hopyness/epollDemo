@@ -6,4 +6,7 @@
 #define EPOLLDEMO_PBHEAD_H
 #include "server_client.pb.h"
 #include "client_server.pb.h"
+
+#include <google/protobuf/stubs/status.h>
+#include <google/protobuf/util/json_util.h>
 #endif //EPOLLDEMO_PBHEAD_H

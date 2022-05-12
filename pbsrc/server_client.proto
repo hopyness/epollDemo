@@ -41,3 +41,46 @@ message FindRet
 
 
 
+syntax = "proto3";
+
+package PB.Server_Client;
+
+
+//登录
+message LoginRet
+{
+	enum MsgId { PROTO3 = 0; Id = 2500011; }
+
+	int32 type =1;
+	//玩家生成的token  以后建议每次发包 都要用这个校验以下  端口和token是否是绑定关系
+	string token=2;
+	//玩家的钱
+	int32 money=3;
+	// 昵称
+	string  useName=4;
+
+}
+//登出
+message LogoutRet
+{
+	enum MsgId { PROTO3 = 0; Id = 2500012; }
+	//[Desc("押注类型")]
+	int32 type =1;
+}
+message User
+{
+        string name = 1;
+        int32 lvID = 2;
+}
+//查询
+message FindRet
+{
+	enum MsgId { PROTO3 = 0; Id = 2500013; }
+	repeated User Userlist=1;
+}
+
+
+
+
+
+

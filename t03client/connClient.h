@@ -16,6 +16,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include "serverApp.h"
+#include "pbhead.h"
 class connClient : public connHandle{
 public:
     connClient();
@@ -32,6 +33,7 @@ public:
     void callbackWrite()override;
     void DealData();
     void connetfd(std::string ipstr,int prot);
+    void connWrite(int id, std::shared_ptr<google::protobuf::Message>   msg);
 
 };
 

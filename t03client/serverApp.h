@@ -25,7 +25,8 @@ public:
     bool addConnHandle(std::shared_ptr<connHandle> shared_handle);
     //移除
     bool delConnHandlebyId(int id);
-private:
+
+public:
     int epoll_fd;//epoll的文件句柄
     bool isrun;//运行状态
 
