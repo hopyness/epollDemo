@@ -29,6 +29,7 @@ void connClient::callbackRead() {
         ((serverApp *) this->serverptr)->delConnHandlebyId(epollpos);
         lihp_fd = -1;// 写个-1  让它失效
     } else {
+        std::cout << n << std::endl;
         recvlen+=n;
        // std::cout << "lihpClient [" << line << "]" << std::endl;
         //*   规范 包结构数据   每个有效包 必须是 前4个字节是 长度  后面对应是数据 (以后后面的部分可以是各种序列化的数据) *//

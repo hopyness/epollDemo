@@ -29,6 +29,7 @@ void connClient::callbackRead() {
         ((serverApp *) this->serverptr)->delConnHandlebyId(epollpos);
         lihp_fd = -1;// 写个-1  让它失效
     } else {
+        std::cout << n << std::endl;
         recvlen+=n;
        // std::cout << "lihpClient [" << line << "]" << std::endl;
         //*   规范 包结构数据   每个有效包 必须是 前4个字节是 长度  后面对应是数据 (以后后面的部分可以是各种序列化的数据) *//
@@ -63,16 +64,17 @@ void connClient::DealData()
                         std::cout <<"--" <<xx3<< std::endl;
                     }
                     if (!msg->ParseFromArray(nowRead+8, dataLen))
-                    { std::cout <<"44" << std::endl;
+                    {
+                        std::cout <<"reeor" << std::endl;
+                    } else{
+                        //std::cout <<"reeor" << std::endl;
+                        std::cout <<"44" << std::endl;
                         std::string temp;
                         google::protobuf::util::MessageToJsonString(*msg, &temp);
-                        std::cout<<temp.c_str();
+                        std::cout<<temp.c_str()<<"-123"<< std::endl;
 
                         std::string buff{};
                         msg->SerializeToString(&buff);
-
-                    } else{
-                        std::cout <<"reeor" << std::endl;
                     }
                         //PB::Client_Server::Login t=
                 }
