@@ -308,8 +308,40 @@ class LoginRet final :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kTokenFieldNumber = 2,
+    kUseNameFieldNumber = 4,
     kTypeFieldNumber = 1,
+    kMoneyFieldNumber = 3,
+    kTokenIntFieldNumber = 5,
   };
+  // string token = 2;
+  void clear_token();
+  const std::string& token() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_token(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_token();
+  PROTOBUF_NODISCARD std::string* release_token();
+  void set_allocated_token(std::string* token);
+  private:
+  const std::string& _internal_token() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_token(const std::string& value);
+  std::string* _internal_mutable_token();
+  public:
+
+  // string useName = 4;
+  void clear_usename();
+  const std::string& usename() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_usename(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_usename();
+  PROTOBUF_NODISCARD std::string* release_usename();
+  void set_allocated_usename(std::string* usename);
+  private:
+  const std::string& _internal_usename() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_usename(const std::string& value);
+  std::string* _internal_mutable_usename();
+  public:
+
   // int32 type = 1;
   void clear_type();
   int32_t type() const;
@@ -319,6 +351,24 @@ class LoginRet final :
   void _internal_set_type(int32_t value);
   public:
 
+  // int32 money = 3;
+  void clear_money();
+  int32_t money() const;
+  void set_money(int32_t value);
+  private:
+  int32_t _internal_money() const;
+  void _internal_set_money(int32_t value);
+  public:
+
+  // int32 tokenInt = 5;
+  void clear_tokenint();
+  int32_t tokenint() const;
+  void set_tokenint(int32_t value);
+  private:
+  int32_t _internal_tokenint() const;
+  void _internal_set_tokenint(int32_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:PB.Server_Client.LoginRet)
  private:
   class _Internal;
@@ -326,7 +376,11 @@ class LoginRet final :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr token_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr usename_;
   int32_t type_;
+  int32_t money_;
+  int32_t tokenint_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_server_5fclient_2eproto;
 };
@@ -882,6 +936,148 @@ inline void LoginRet::_internal_set_type(int32_t value) {
 inline void LoginRet::set_type(int32_t value) {
   _internal_set_type(value);
   // @@protoc_insertion_point(field_set:PB.Server_Client.LoginRet.type)
+}
+
+// string token = 2;
+inline void LoginRet::clear_token() {
+  token_.ClearToEmpty();
+}
+inline const std::string& LoginRet::token() const {
+  // @@protoc_insertion_point(field_get:PB.Server_Client.LoginRet.token)
+  return _internal_token();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void LoginRet::set_token(ArgT0&& arg0, ArgT... args) {
+ 
+ token_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:PB.Server_Client.LoginRet.token)
+}
+inline std::string* LoginRet::mutable_token() {
+  std::string* _s = _internal_mutable_token();
+  // @@protoc_insertion_point(field_mutable:PB.Server_Client.LoginRet.token)
+  return _s;
+}
+inline const std::string& LoginRet::_internal_token() const {
+  return token_.Get();
+}
+inline void LoginRet::_internal_set_token(const std::string& value) {
+  
+  token_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* LoginRet::_internal_mutable_token() {
+  
+  return token_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* LoginRet::release_token() {
+  // @@protoc_insertion_point(field_release:PB.Server_Client.LoginRet.token)
+  return token_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void LoginRet::set_allocated_token(std::string* token) {
+  if (token != nullptr) {
+    
+  } else {
+    
+  }
+  token_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), token,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (token_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    token_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:PB.Server_Client.LoginRet.token)
+}
+
+// int32 tokenInt = 5;
+inline void LoginRet::clear_tokenint() {
+  tokenint_ = 0;
+}
+inline int32_t LoginRet::_internal_tokenint() const {
+  return tokenint_;
+}
+inline int32_t LoginRet::tokenint() const {
+  // @@protoc_insertion_point(field_get:PB.Server_Client.LoginRet.tokenInt)
+  return _internal_tokenint();
+}
+inline void LoginRet::_internal_set_tokenint(int32_t value) {
+  
+  tokenint_ = value;
+}
+inline void LoginRet::set_tokenint(int32_t value) {
+  _internal_set_tokenint(value);
+  // @@protoc_insertion_point(field_set:PB.Server_Client.LoginRet.tokenInt)
+}
+
+// int32 money = 3;
+inline void LoginRet::clear_money() {
+  money_ = 0;
+}
+inline int32_t LoginRet::_internal_money() const {
+  return money_;
+}
+inline int32_t LoginRet::money() const {
+  // @@protoc_insertion_point(field_get:PB.Server_Client.LoginRet.money)
+  return _internal_money();
+}
+inline void LoginRet::_internal_set_money(int32_t value) {
+  
+  money_ = value;
+}
+inline void LoginRet::set_money(int32_t value) {
+  _internal_set_money(value);
+  // @@protoc_insertion_point(field_set:PB.Server_Client.LoginRet.money)
+}
+
+// string useName = 4;
+inline void LoginRet::clear_usename() {
+  usename_.ClearToEmpty();
+}
+inline const std::string& LoginRet::usename() const {
+  // @@protoc_insertion_point(field_get:PB.Server_Client.LoginRet.useName)
+  return _internal_usename();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void LoginRet::set_usename(ArgT0&& arg0, ArgT... args) {
+ 
+ usename_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:PB.Server_Client.LoginRet.useName)
+}
+inline std::string* LoginRet::mutable_usename() {
+  std::string* _s = _internal_mutable_usename();
+  // @@protoc_insertion_point(field_mutable:PB.Server_Client.LoginRet.useName)
+  return _s;
+}
+inline const std::string& LoginRet::_internal_usename() const {
+  return usename_.Get();
+}
+inline void LoginRet::_internal_set_usename(const std::string& value) {
+  
+  usename_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* LoginRet::_internal_mutable_usename() {
+  
+  return usename_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* LoginRet::release_usename() {
+  // @@protoc_insertion_point(field_release:PB.Server_Client.LoginRet.useName)
+  return usename_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void LoginRet::set_allocated_usename(std::string* usename) {
+  if (usename != nullptr) {
+    
+  } else {
+    
+  }
+  usename_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), usename,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (usename_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    usename_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:PB.Server_Client.LoginRet.useName)
 }
 
 // -------------------------------------------------------------------

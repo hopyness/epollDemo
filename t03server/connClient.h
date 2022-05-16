@@ -10,7 +10,8 @@
 #include <string>
 #include <string.h>
 #include "serverApp.h"
-class connClient : public connHandle{
+#include "pbhead.h"
+class connClient : public std::enable_shared_from_this<connClient> ,public connHandle{
 public:
     connClient();
 
@@ -27,7 +28,7 @@ public:
     void callbackWrite()override;
     void Write();
     void DealData();
-
+    void connWrite(int id, std::shared_ptr<google::protobuf::Message>   msg);
 };
 
 

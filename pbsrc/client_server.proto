@@ -30,19 +30,36 @@ message Login
 message Logout
 {
 	enum MsgId { PROTO3 = 0; Id = 2500002; }
-	string token=1;
+	int32 token=1;
 
 }
 //查询
 message FindAll
 {
 	enum MsgId { PROTO3 = 0; Id = 2500003; }
-	string token=1;
+	int32 token=1;
 }
 //查询
 message FindList
 {
 	enum MsgId { PROTO3 = 0; Id = 2500004; }
-	string token=1;
+	int32 token=1;
     repeated int32  listId = 2;
+}
+//坐下
+message SitDown
+{
+	enum MsgId { PROTO3 = 0; Id = 2500010; }
+	int32 token=1;
+    int32 tableId=2;
+    int32 tableSit=3;
+}
+
+//准备
+message Ready
+{
+	enum MsgId { PROTO3 = 0; Id = 2500011; }
+	int32 token=1;
+    int32 tableId=2;
+    int32 tableSit=3;
 }

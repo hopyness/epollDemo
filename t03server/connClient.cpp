@@ -3,7 +3,7 @@
 //
 
 #include "connClient.h"
-#include "pbhead.h"
+#include "lobby.h"
 connClient::connClient() {
      recvData=new char[1024*200+10];
      //建议一个包不能超过1024 char大小 大概就能缓存200个包
@@ -48,7 +48,7 @@ void connClient::DealData()
     {
         int dataLen = *(int *) nowRead;  //数据长度
         int datatype = *(int *) (nowRead+4);//数据类型  //比如char*    protobuf  或者以后自己写的序列化？？
-        std::cout <<"002" <<datatype<<dataLen << std::endl;
+        std::cout << " datatype"<<datatype << std::endl;
         if(readEnd-nowRead>=dataLen+8) //如果数据完整 才操作 如果不完整 可能要读下一个包了
         {
             // nowRead+8 ~ nowRead+dataLen 就是正常包的数据
@@ -56,7 +56,7 @@ void connClient::DealData()
             switch (datatype) {
                 case PB::Client_Server::Login::Id:
                 {
-                    std::cout <<"0033" << std::endl;
+
                     auto msg =  std::make_shared<PB::Client_Server::Login>();
                     for(int xx=0;xx<dataLen+8;xx++)
                     {
@@ -67,6 +67,32 @@ void connClient::DealData()
                     {
                         std::cout <<"reeor" << std::endl;
                     } else{
+                        //登录包
+                        //告诉大厅 有个 玩家登录
+                        auto lp=((serverApp *) this->serverptr)->sp_lobby->addaplayer(msg );
+                        if(lp)
+                        {
+                            //添加成功 玩家类和 tcp 实现绑定
+                            std::cout <<"ok" << std::endl;
+                            //std::cout <<"No" << std::endl;
+                            lp->con_ptr = shared_from_this();
+                            //回包
+                            auto  ss=std::make_shared<PB::Server_Client::LoginRet>();
+                           // ss->set_uname("123");
+                            //ss->set_pwd("123");
+
+                            ss->set_type(1);
+                            ss->set_usename(lp->unmae);
+                            ss->set_token(lp->tokenStr);
+                            ss->set_tokenint(lp->token);
+                            ss->set_money(lp->money);
+                            connWrite(PB::Server_Client::LoginRet::Id,ss);
+
+                        }
+                        else{
+                            //进不了大厅？ //密码错误 大厅添加不起玩家？
+                            std::cout <<"No" << std::endl;
+                        }
                         //std::cout <<"reeor" << std::endl;
                         std::cout <<"44" << std::endl;
                         std::string temp;
@@ -79,6 +105,61 @@ void connClient::DealData()
                         //PB::Client_Server::Login t=
                 }
                     break;
+                case PB::Client_Server::Logout::Id:
+                {
+                    std::cout <<"Logout" << std::endl;
+                    auto msg =  std::make_shared<PB::Client_Server::Logout>();
+
+                    if (!msg->ParseFromArray(nowRead+8, dataLen))
+                    {
+                        std::cout <<"reeor" << std::endl;
+                    } else{
+
+                        int token=msg->token();
+                        // 大厅 移除玩家
+                        auto lp=((serverApp *) this->serverptr)->sp_lobby->delaplayer(msg );
+                        std::cout <<"LogoutRet" <<lp<< std::endl;
+
+                    }
+                }
+                    break;
+
+                case PB::Client_Server::SitDown::Id:
+                {
+                    std::cout <<"SitDown" << std::endl;
+                    auto msg =  std::make_shared<PB::Client_Server::SitDown>();
+
+                    if (!msg->ParseFromArray(nowRead+8, dataLen))
+                    {
+                        std::cout <<"reeor" << std::endl;
+                    } else{
+
+                        int token=msg->token();
+                        // 大厅 移除玩家
+                        auto lp=((serverApp *) this->serverptr)->sp_lobby->sitDown(msg );
+                        std::cout <<"SitDown" <<lp<< std::endl;
+
+                    }
+                }
+                    break;
+                case PB::Client_Server::Ready::Id:
+                {
+                    std::cout <<"Logout" << std::endl;
+                    auto msg =  std::make_shared<PB::Client_Server::Ready>();
+
+                    if (!msg->ParseFromArray(nowRead+8, dataLen))
+                    {
+                        std::cout <<"reeor" << std::endl;
+                    } else{
+
+                        int token=msg->token();
+                        // 大厅 移除玩家
+                        auto lp=((serverApp *) this->serverptr)->sp_lobby->Ready(msg );
+                        std::cout <<"LogoutRet" <<lp<< std::endl;
+
+                    }
+                }
+                    break;
             }
             // 操作完成 后 就men
 
@@ -87,8 +168,9 @@ void connClient::DealData()
         }
         nowRead+=dataLen+8;//这个+8 和设计包有关   dataLen只是数据长度 不包括包头长度 如果设计含包头长度 就不要+8
     }
+    std::cout << " memmove"<<nowRead<<readEnd-nowRead << std::endl;
     memmove(recvData,nowRead,readEnd-nowRead);
-    recvlen -= readEnd-nowRead;
+    recvlen += recvData-nowRead;
 
 }
 //从char* 中读取数据
@@ -113,4 +195,20 @@ void connClient::Write()
     std::cout << "Write" << std::endl;
     //
     write(lihp_fd,"hello",6);
+}
+
+void connClient::connWrite(int id,std::shared_ptr<google::protobuf::Message> msg)
+{
+    //  std::string buff{};
+    // msg->SerializeToString(&buff);
+    std::cout << "Write"<<id << std::endl;
+    int pbLen = msg->ByteSizeLong();
+    char * tt =new char[pbLen+8];
+    msg->SerializeToArray(tt+8, pbLen);
+    (*(int*)(tt))=pbLen;
+    (*(int*)(tt+4))=id;
+    // int a=buff.size();
+    std::cout<<pbLen<< std::endl;
+    write(lihp_fd,tt,pbLen+8);
+
 }

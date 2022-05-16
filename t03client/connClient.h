@@ -17,6 +17,7 @@
 #include <arpa/inet.h>
 #include "serverApp.h"
 #include "pbhead.h"
+#include "player.h"
 class connClient : public connHandle{
 public:
     connClient();
@@ -34,7 +35,7 @@ public:
     void DealData();
     void connetfd(std::string ipstr,int prot);
     void connWrite(int id, std::shared_ptr<google::protobuf::Message>   msg);
-
+    std::shared_ptr<player> m_player;
 };
 
 

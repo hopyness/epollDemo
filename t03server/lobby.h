@@ -17,33 +17,41 @@
  * */
 #include <vector>
 #include <set>
+#include <map>
 #include "gameserver.h"
 #include "player.h"
+#include "pbhead.h"
 //保存玩家 用玩家id  不需要用玩家指针？？
 struct tabeinfo
 {
-    std::shared_ptr<player> p_A= nullptr;
-    std::shared_ptr<player> p_B= nullptr;
-    std::shared_ptr<player> p_C= nullptr;
-    std::shared_ptr<player> p_D= nullptr;
+    std::array< std::shared_ptr<player>, 4> table_player;
 
+    int isReady =0;
 };
-class lobby {
+class lobby  :public std::enable_shared_from_this<lobby>{
 public://方法
-    lobby()
-    {}
+    lobby();
+
     ~lobby()
     {}
     //addaplayer 添加一个玩家
     //delaplayer  移除一个玩家
     //stargameserver( teebid)
     //
+    std::shared_ptr<player> addaplayer(std::shared_ptr<PB::Client_Server::Login> t);
+    int delaplayer(std::shared_ptr<PB::Client_Server::Logout> t);
+
+    int sitDown(std::shared_ptr<PB::Client_Server::SitDown> t);
+    int Ready(std::shared_ptr<PB::Client_Server::Ready> t);
+
+    void doReady(int ta);
 
 public: //变量
     //1 玩家信息
-    std::set<int , std::shared_ptr<player> > playerSet;
+    std::map<int , std::shared_ptr<player> > playerInfo;
+    //进大厅玩家可以不在座子上  key 值 保存玩家的 token
     //1 座子信息
-    std::set<int , tabeinfo > tableinfo;
+    std::map<int , tabeinfo > tableinfo;
     //?? 座子状态？？
 };
 

@@ -31,7 +31,7 @@ void connCmd::callbackWrite() {
 
 
 void connCmd::CMDdo(const char *x) {
-    std::cout << "CMDdo [" << x << "]" << std::endl;
+   // std::cout << "CMDdo [" << x << "]" << std::endl;
 
     if (strncmp(x, "quit", 4) == 0) {
         std::cout << "CMDdo  quit" << std::endl;
@@ -72,14 +72,71 @@ void connCmd::CMDdo(const char *x) {
         }
     }
     //登录
-    if (strncmp(x, "sendlogin", 9) == 0) {
+    if (strncmp(x, "login1", 6) == 0) {
         //给所有客户端发送一条消息 --   sendall  1234
 
        auto  ss=std::make_shared<PB::Client_Server::Login>();
-        ss->set_uname("123");
+        ss->set_uname("111");
         ss->set_pwd("123");
 
         connClientX->connWrite(PB::Client_Server::Login::Id,ss);
+    }
+
+    //登录
+    if (strncmp(x, "login2", 6) == 0) {
+        //给所有客户端发送一条消息 --   sendall  1234
+
+        auto  ss=std::make_shared<PB::Client_Server::Login>();
+        ss->set_uname("222");
+        ss->set_pwd("123");
+
+        connClientX->connWrite(PB::Client_Server::Login::Id,ss);
+    }
+
+    if (strncmp(x, "logout", 6) == 0) {
+        //给所有客户端发送一条消息 --   sendall  1234
+        std::cout << "CMDdo logout" << std::endl;
+
+        auto  ss=std::make_shared<PB::Client_Server::Logout>();
+        //connClientX->m_player->token
+        ss->set_token(connClientX->m_player->token);
+
+        connClientX->connWrite(PB::Client_Server::Logout::Id,ss);
+    }
+    if (strncmp(x, "sd11", 4 ) == 0) {
+        //坐下
+
+        auto  ss=std::make_shared<PB::Client_Server::SitDown>();
+        //connClientX->m_player->token
+        ss->set_token(connClientX->m_player->token);
+        ss->set_tableid(1);
+        ss->set_tablesit(1);
+        connClientX->m_player->tableid=1;
+        connClientX->m_player->tablesit=1;
+        connClientX->connWrite(PB::Client_Server::SitDown::Id,ss);
+    }
+    if (strncmp(x, "sd12", 4) == 0) {
+
+        auto  ss=std::make_shared<PB::Client_Server::SitDown>();
+        //connClientX->m_player->token
+        ss->set_token(connClientX->m_player->token);
+        ss->set_tableid(1);
+        ss->set_tablesit(2);
+        connClientX->m_player->tableid=1;
+        connClientX->m_player->tablesit=2;
+        connClientX->connWrite(PB::Client_Server::SitDown::Id,ss);
+    }
+    if (strncmp(x, "ready", 5) == 0) {
+
+        auto  ss=std::make_shared<PB::Client_Server::Ready>();
+        //connClientX->m_player->token
+        ss->set_token(connClientX->m_player->token);
+        ss->set_tableid(1);
+        ss->set_tablesit(2);
+
+        ss->set_tableid( connClientX->m_player->tableid);
+        ss->set_tablesit( connClientX->m_player->tablesit);
+        connClientX->connWrite(PB::Client_Server::Ready::Id,ss);
     }
 
 }

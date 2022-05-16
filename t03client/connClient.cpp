@@ -28,7 +28,7 @@ void connClient::callbackRead() {
     int n = 0;
     char line[9999];
 
-        std::cout <<  recvData+recvlen<<"::"<<recvend-recvlen<<
+        std::cout <<  recvlen<<"::"<<recvend-recvlen<<
                   std::endl;
         if ((n = read(lihp_fd, recvData+recvlen, recvend-recvlen)) <= 0) {
             // 读取错误
@@ -40,6 +40,7 @@ void connClient::callbackRead() {
             lihp_fd = -1;// 写个-1  让它失效
         } else {
             recvlen+=n;
+            std::cout <<n<<std::endl;
             // std::cout << "lihpClient [" << line << "]" << std::endl;
             //*   规范 包结构数据   每个有效包 必须是 前4个字节是 长度  后面对应是数据 (以后后面的部分可以是各种序列化的数据) *//
             //处理数据
@@ -52,15 +53,21 @@ void connClient::callbackRead() {
 void connClient::DealData()
 {
     //如果一次性来多个包
-
+    std::cout << "33" <<
+              std::endl;
     char * nowRead=recvData;
     char * readEnd=recvData+recvlen;
     int nowReadLen=0;
+    std::cout << "AS" <<recvlen<<
+              std::endl;
+    std::cout << "AA" <<readEnd-nowRead<<
+              std::endl;
     while (readEnd-nowRead>=8) //必须要有8个字符 让 它可以读包头
     {
         int dataLen = *(int *) nowRead;  //数据长度
         int datatype = *(int *) (nowRead+4);//数据类型  //比如char*    protobuf  或者以后自己写的序列化？？
-
+        std::cout <<dataLen<< "##" <<datatype<<
+                  std::endl;
         if(readEnd-nowRead>=dataLen+8) //如果数据完整 才操作 如果不完整 可能要读下一个包了
         {
             // nowRead+8 ~ nowRead+dataLen 就是正常包的数据
@@ -68,13 +75,19 @@ void connClient::DealData()
 
 
             switch (datatype) {
-                case PB::Client_Server::Login::Id: {
-                    auto msg = std::make_shared<PB::Client_Server::Login>();
-                    if (!msg->ParseFromArray(nowRead + 8, dataLen)) {
+                case PB::Server_Client::LoginRet::Id: {
+                    auto msg = std::make_shared<PB::Server_Client::LoginRet>();
+                    if (msg->ParseFromArray(nowRead + 8, dataLen)) {
                         std::string temp;
                         google::protobuf::util::MessageToJsonString(*msg, &temp);
                         std::cout << temp.c_str() <<
                                   std::endl;
+                        auto xx=std::make_shared<player>();
+                        xx->unmae=msg->usename();
+                        xx->money=msg->money();
+                        xx->token=msg->tokenint();
+                        xx->tokenStr=msg->token();
+                        m_player=xx;
                     }
                     //PB::Client_Server::Login t=
                 }
@@ -85,10 +98,20 @@ void connClient::DealData()
         } else{
             break; //数据不够了
         }
+        std::cout << "nowRead+" <<
+                  std::endl;
         nowRead+=dataLen+8;//这个+8 和设计包有关   dataLen只是数据长度 不包括包头长度 如果设计含包头长度 就不要+8
     }
+    std::cout << "BB" <<recvData-nowRead<<
+              std::endl;
     memmove(recvData,nowRead,readEnd-nowRead);
-    recvlen -= readEnd-nowRead;
+
+    std::cout << "CA" <<readEnd-nowRead<<
+              std::endl;
+    recvlen += recvData-nowRead;
+
+    std::cout << "CC" <<recvlen<<
+              std::endl;
 
 }
 void connClient::callbackWrite() {
@@ -129,19 +152,5 @@ void connClient::connWrite(int id,std::shared_ptr<google::protobuf::Message> msg
 
 
 
-        std::string temp;
-        google::protobuf::util::MessageToJsonString(*msg, &temp);
-        std::cout<<temp.c_str();
-
-    for(int xx=0;xx<pbLen+8;xx++)
-    {
-        int xx3=*(tt+xx);
-        std::cout <<"--" <<xx3<< std::endl;
-    }
-   // PB::Client_Server::Login t;
-   // t.uname()
-    auto  ss=std::make_shared<PB::Client_Server::Login>();
-    ss->ParseFromArray(tt+8, pbLen);
-    std::cout<<ss->uname()<<std::endl;
 
 }

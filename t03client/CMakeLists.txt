@@ -16,6 +16,8 @@ add_executable( t03client
         connHandle.cpp
         connCmd.cpp
         connClient.cpp
+        player.cpp
+
         main.cpp
 
         )

@@ -4,14 +4,16 @@
 
 #ifndef ALL_SERVERAPP_H
 #define ALL_SERVERAPP_H
-
-
-#include "connHandle.h"
-#include "timer.h"
 #include <sys/epoll.h>
 #include <memory>
 #include <list>
-#include "lobby.h"
+#include <random>
+
+#include "connHandle.h"
+#include "timer.h"
+
+//#include "lobby.h"
+class  lobby;
 //最多添加的文件句柄 也是epoll add的最大值
 constexpr int maxFiles=10000;
 //APP 绑定 epoll  run 运行 就是 死循环调用epollwait
@@ -36,14 +38,24 @@ public:
     std::array<std::shared_ptr<connHandle>, maxFiles> m_lihpHandles;
     //定时器函数？
     std::list<std::shared_ptr<timer>>m_timerList;
-private:
+
     std::shared_ptr<lobby> sp_lobby;
+private:
+
     int epoll_fd; //epoll的文件句柄
     bool isrun; //运行状态
 
     std::array<epoll_event, maxFiles> m_events;
     // std::array<std::shared_ptr<connHandle>, maxFiles> m_lihpHandles;
-};
 
+    //一些静态函数
+public:
+    static  int Rand(int a,int b)
+    {
+        return  std::uniform_int_distribution<int>(a, b)(e1);
+    }
+    static std::default_random_engine e1;
+
+};
 
 #endif //ALL_SERVERAPP_H

@@ -8,16 +8,11 @@
 #include <iostream>
 #include <string>
 #include <memory>
-#include "connClient.h"
-#include "lobby.h"
+
 class player {
 
 public:
     //方法
-    player()
-    {
-        isReady=0;
-    }
     ~player()
     {
         std::cout<<" ~player()"<<unmae.c_str()<<std::endl;
@@ -30,10 +25,8 @@ public:
     int64_t  money;
     int token;
     std::string tokenStr;
-    //2 和其他对象的绑定
-    std::shared_ptr<connClient>  con_ptr;
-    std::shared_ptr<lobby>  lobby_ptr;
-    int isReady;
+    int tableid;
+    int  tablesit;
 
 };
 

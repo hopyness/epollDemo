@@ -23,7 +23,6 @@
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/arena.h>
 #include <google/protobuf/arenastring.h>
-#include <google/protobuf/generated_message_bases.h>
 #include <google/protobuf/generated_message_table_driven.h>
 #include <google/protobuf/generated_message_util.h>
 #include <google/protobuf/metadata_lite.h>
@@ -48,7 +47,7 @@ struct TableStruct_client_5fserver_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[4]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[6]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -69,6 +68,12 @@ extern LoginDefaultTypeInternal _Login_default_instance_;
 class Logout;
 struct LogoutDefaultTypeInternal;
 extern LogoutDefaultTypeInternal _Logout_default_instance_;
+class Ready;
+struct ReadyDefaultTypeInternal;
+extern ReadyDefaultTypeInternal _Ready_default_instance_;
+class SitDown;
+struct SitDownDefaultTypeInternal;
+extern SitDownDefaultTypeInternal _SitDown_default_instance_;
 }  // namespace Client_Server
 }  // namespace PB
 PROTOBUF_NAMESPACE_OPEN
@@ -76,6 +81,8 @@ template<> ::PB::Client_Server::FindAll* Arena::CreateMaybeMessage<::PB::Client_
 template<> ::PB::Client_Server::FindList* Arena::CreateMaybeMessage<::PB::Client_Server::FindList>(Arena*);
 template<> ::PB::Client_Server::Login* Arena::CreateMaybeMessage<::PB::Client_Server::Login>(Arena*);
 template<> ::PB::Client_Server::Logout* Arena::CreateMaybeMessage<::PB::Client_Server::Logout>(Arena*);
+template<> ::PB::Client_Server::Ready* Arena::CreateMaybeMessage<::PB::Client_Server::Ready>(Arena*);
+template<> ::PB::Client_Server::SitDown* Arena::CreateMaybeMessage<::PB::Client_Server::SitDown>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace PB {
 namespace Client_Server {
@@ -179,6 +186,56 @@ inline bool FindList_MsgId_Parse(
     ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, FindList_MsgId* value) {
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<FindList_MsgId>(
     FindList_MsgId_descriptor(), name, value);
+}
+enum SitDown_MsgId : int {
+  SitDown_MsgId_PROTO3 = 0,
+  SitDown_MsgId_Id = 2500010,
+  SitDown_MsgId_SitDown_MsgId_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  SitDown_MsgId_SitDown_MsgId_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool SitDown_MsgId_IsValid(int value);
+constexpr SitDown_MsgId SitDown_MsgId_MsgId_MIN = SitDown_MsgId_PROTO3;
+constexpr SitDown_MsgId SitDown_MsgId_MsgId_MAX = SitDown_MsgId_Id;
+constexpr int SitDown_MsgId_MsgId_ARRAYSIZE = SitDown_MsgId_MsgId_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* SitDown_MsgId_descriptor();
+template<typename T>
+inline const std::string& SitDown_MsgId_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, SitDown_MsgId>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function SitDown_MsgId_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    SitDown_MsgId_descriptor(), enum_t_value);
+}
+inline bool SitDown_MsgId_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, SitDown_MsgId* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<SitDown_MsgId>(
+    SitDown_MsgId_descriptor(), name, value);
+}
+enum Ready_MsgId : int {
+  Ready_MsgId_PROTO3 = 0,
+  Ready_MsgId_Id = 2500011,
+  Ready_MsgId_Ready_MsgId_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  Ready_MsgId_Ready_MsgId_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool Ready_MsgId_IsValid(int value);
+constexpr Ready_MsgId Ready_MsgId_MsgId_MIN = Ready_MsgId_PROTO3;
+constexpr Ready_MsgId Ready_MsgId_MsgId_MAX = Ready_MsgId_Id;
+constexpr int Ready_MsgId_MsgId_ARRAYSIZE = Ready_MsgId_MsgId_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* Ready_MsgId_descriptor();
+template<typename T>
+inline const std::string& Ready_MsgId_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, Ready_MsgId>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function Ready_MsgId_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    Ready_MsgId_descriptor(), enum_t_value);
+}
+inline bool Ready_MsgId_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, Ready_MsgId* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<Ready_MsgId>(
+    Ready_MsgId_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -380,9 +437,10 @@ class Login final :
 // -------------------------------------------------------------------
 
 class Logout final :
-    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:PB.Client_Server.Logout) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:PB.Client_Server.Logout) */ {
  public:
   inline Logout() : Logout(nullptr) {}
+  ~Logout() override;
   explicit constexpr Logout(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
   Logout(const Logout& from);
@@ -455,15 +513,27 @@ class Logout final :
   Logout* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
     return CreateMaybeMessage<Logout>(arena);
   }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
-  inline void CopyFrom(const Logout& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(this, from);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
-  void MergeFrom(const Logout& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(this, from);
-  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const Logout& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const Logout& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
   public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Logout* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
@@ -474,6 +544,8 @@ class Logout final :
   explicit Logout(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
   public:
 
   static const ClassData _class_data_;
@@ -515,6 +587,18 @@ class Logout final :
 
   // accessors -------------------------------------------------------
 
+  enum : int {
+    kTokenFieldNumber = 1,
+  };
+  // int32 token = 1;
+  void clear_token();
+  int32_t token() const;
+  void set_token(int32_t value);
+  private:
+  int32_t _internal_token() const;
+  void _internal_set_token(int32_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:PB.Client_Server.Logout)
  private:
   class _Internal;
@@ -522,15 +606,17 @@ class Logout final :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
+  int32_t token_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_client_5fserver_2eproto;
 };
 // -------------------------------------------------------------------
 
 class FindAll final :
-    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:PB.Client_Server.FindAll) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:PB.Client_Server.FindAll) */ {
  public:
   inline FindAll() : FindAll(nullptr) {}
+  ~FindAll() override;
   explicit constexpr FindAll(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
   FindAll(const FindAll& from);
@@ -603,15 +689,27 @@ class FindAll final :
   FindAll* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
     return CreateMaybeMessage<FindAll>(arena);
   }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
-  inline void CopyFrom(const FindAll& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(this, from);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
-  void MergeFrom(const FindAll& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(this, from);
-  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const FindAll& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const FindAll& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
   public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(FindAll* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
@@ -622,6 +720,8 @@ class FindAll final :
   explicit FindAll(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
   public:
 
   static const ClassData _class_data_;
@@ -663,6 +763,18 @@ class FindAll final :
 
   // accessors -------------------------------------------------------
 
+  enum : int {
+    kTokenFieldNumber = 1,
+  };
+  // int32 token = 1;
+  void clear_token();
+  int32_t token() const;
+  void set_token(int32_t value);
+  private:
+  int32_t _internal_token() const;
+  void _internal_set_token(int32_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:PB.Client_Server.FindAll)
  private:
   class _Internal;
@@ -670,6 +782,7 @@ class FindAll final :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
+  int32_t token_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_client_5fserver_2eproto;
 };
@@ -827,9 +940,10 @@ class FindList final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kListIdFieldNumber = 1,
+    kListIdFieldNumber = 2,
+    kTokenFieldNumber = 1,
   };
-  // repeated int32 listId = 1;
+  // repeated int32 listId = 2;
   int listid_size() const;
   private:
   int _internal_listid_size() const;
@@ -851,6 +965,15 @@ class FindList final :
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
       mutable_listid();
 
+  // int32 token = 1;
+  void clear_token();
+  int32_t token() const;
+  void set_token(int32_t value);
+  private:
+  int32_t _internal_token() const;
+  void _internal_set_token(int32_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:PB.Client_Server.FindList)
  private:
   class _Internal;
@@ -860,6 +983,403 @@ class FindList final :
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t > listid_;
   mutable std::atomic<int> _listid_cached_byte_size_;
+  int32_t token_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_client_5fserver_2eproto;
+};
+// -------------------------------------------------------------------
+
+class SitDown final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:PB.Client_Server.SitDown) */ {
+ public:
+  inline SitDown() : SitDown(nullptr) {}
+  ~SitDown() override;
+  explicit constexpr SitDown(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SitDown(const SitDown& from);
+  SitDown(SitDown&& from) noexcept
+    : SitDown() {
+    *this = ::std::move(from);
+  }
+
+  inline SitDown& operator=(const SitDown& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SitDown& operator=(SitDown&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SitDown& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SitDown* internal_default_instance() {
+    return reinterpret_cast<const SitDown*>(
+               &_SitDown_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    4;
+
+  friend void swap(SitDown& a, SitDown& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SitDown* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SitDown* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SitDown* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SitDown>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SitDown& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const SitDown& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SitDown* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "PB.Client_Server.SitDown";
+  }
+  protected:
+  explicit SitDown(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  typedef SitDown_MsgId MsgId;
+  static constexpr MsgId PROTO3 =
+    SitDown_MsgId_PROTO3;
+  static constexpr MsgId Id =
+    SitDown_MsgId_Id;
+  static inline bool MsgId_IsValid(int value) {
+    return SitDown_MsgId_IsValid(value);
+  }
+  static constexpr MsgId MsgId_MIN =
+    SitDown_MsgId_MsgId_MIN;
+  static constexpr MsgId MsgId_MAX =
+    SitDown_MsgId_MsgId_MAX;
+  static constexpr int MsgId_ARRAYSIZE =
+    SitDown_MsgId_MsgId_ARRAYSIZE;
+  static inline const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor*
+  MsgId_descriptor() {
+    return SitDown_MsgId_descriptor();
+  }
+  template<typename T>
+  static inline const std::string& MsgId_Name(T enum_t_value) {
+    static_assert(::std::is_same<T, MsgId>::value ||
+      ::std::is_integral<T>::value,
+      "Incorrect type passed to function MsgId_Name.");
+    return SitDown_MsgId_Name(enum_t_value);
+  }
+  static inline bool MsgId_Parse(::PROTOBUF_NAMESPACE_ID::ConstStringParam name,
+      MsgId* value) {
+    return SitDown_MsgId_Parse(name, value);
+  }
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kTokenFieldNumber = 1,
+    kTableIdFieldNumber = 2,
+    kTableSitFieldNumber = 3,
+  };
+  // int32 token = 1;
+  void clear_token();
+  int32_t token() const;
+  void set_token(int32_t value);
+  private:
+  int32_t _internal_token() const;
+  void _internal_set_token(int32_t value);
+  public:
+
+  // int32 tableId = 2;
+  void clear_tableid();
+  int32_t tableid() const;
+  void set_tableid(int32_t value);
+  private:
+  int32_t _internal_tableid() const;
+  void _internal_set_tableid(int32_t value);
+  public:
+
+  // int32 tableSit = 3;
+  void clear_tablesit();
+  int32_t tablesit() const;
+  void set_tablesit(int32_t value);
+  private:
+  int32_t _internal_tablesit() const;
+  void _internal_set_tablesit(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:PB.Client_Server.SitDown)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  int32_t token_;
+  int32_t tableid_;
+  int32_t tablesit_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_client_5fserver_2eproto;
+};
+// -------------------------------------------------------------------
+
+class Ready final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:PB.Client_Server.Ready) */ {
+ public:
+  inline Ready() : Ready(nullptr) {}
+  ~Ready() override;
+  explicit constexpr Ready(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  Ready(const Ready& from);
+  Ready(Ready&& from) noexcept
+    : Ready() {
+    *this = ::std::move(from);
+  }
+
+  inline Ready& operator=(const Ready& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Ready& operator=(Ready&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Ready& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const Ready* internal_default_instance() {
+    return reinterpret_cast<const Ready*>(
+               &_Ready_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    5;
+
+  friend void swap(Ready& a, Ready& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Ready* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Ready* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  Ready* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<Ready>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const Ready& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const Ready& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Ready* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "PB.Client_Server.Ready";
+  }
+  protected:
+  explicit Ready(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  typedef Ready_MsgId MsgId;
+  static constexpr MsgId PROTO3 =
+    Ready_MsgId_PROTO3;
+  static constexpr MsgId Id =
+    Ready_MsgId_Id;
+  static inline bool MsgId_IsValid(int value) {
+    return Ready_MsgId_IsValid(value);
+  }
+  static constexpr MsgId MsgId_MIN =
+    Ready_MsgId_MsgId_MIN;
+  static constexpr MsgId MsgId_MAX =
+    Ready_MsgId_MsgId_MAX;
+  static constexpr int MsgId_ARRAYSIZE =
+    Ready_MsgId_MsgId_ARRAYSIZE;
+  static inline const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor*
+  MsgId_descriptor() {
+    return Ready_MsgId_descriptor();
+  }
+  template<typename T>
+  static inline const std::string& MsgId_Name(T enum_t_value) {
+    static_assert(::std::is_same<T, MsgId>::value ||
+      ::std::is_integral<T>::value,
+      "Incorrect type passed to function MsgId_Name.");
+    return Ready_MsgId_Name(enum_t_value);
+  }
+  static inline bool MsgId_Parse(::PROTOBUF_NAMESPACE_ID::ConstStringParam name,
+      MsgId* value) {
+    return Ready_MsgId_Parse(name, value);
+  }
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kTokenFieldNumber = 1,
+    kTableIdFieldNumber = 2,
+    kTableSitFieldNumber = 3,
+  };
+  // int32 token = 1;
+  void clear_token();
+  int32_t token() const;
+  void set_token(int32_t value);
+  private:
+  int32_t _internal_token() const;
+  void _internal_set_token(int32_t value);
+  public:
+
+  // int32 tableId = 2;
+  void clear_tableid();
+  int32_t tableid() const;
+  void set_tableid(int32_t value);
+  private:
+  int32_t _internal_tableid() const;
+  void _internal_set_tableid(int32_t value);
+  public:
+
+  // int32 tableSit = 3;
+  void clear_tablesit();
+  int32_t tablesit() const;
+  void set_tablesit(int32_t value);
+  private:
+  int32_t _internal_tablesit() const;
+  void _internal_set_tablesit(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:PB.Client_Server.Ready)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  int32_t token_;
+  int32_t tableid_;
+  int32_t tablesit_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_client_5fserver_2eproto;
 };
@@ -980,15 +1500,75 @@ inline void Login::set_allocated_pwd(std::string* pwd) {
 
 // Logout
 
+// int32 token = 1;
+inline void Logout::clear_token() {
+  token_ = 0;
+}
+inline int32_t Logout::_internal_token() const {
+  return token_;
+}
+inline int32_t Logout::token() const {
+  // @@protoc_insertion_point(field_get:PB.Client_Server.Logout.token)
+  return _internal_token();
+}
+inline void Logout::_internal_set_token(int32_t value) {
+  
+  token_ = value;
+}
+inline void Logout::set_token(int32_t value) {
+  _internal_set_token(value);
+  // @@protoc_insertion_point(field_set:PB.Client_Server.Logout.token)
+}
+
 // -------------------------------------------------------------------
 
 // FindAll
+
+// int32 token = 1;
+inline void FindAll::clear_token() {
+  token_ = 0;
+}
+inline int32_t FindAll::_internal_token() const {
+  return token_;
+}
+inline int32_t FindAll::token() const {
+  // @@protoc_insertion_point(field_get:PB.Client_Server.FindAll.token)
+  return _internal_token();
+}
+inline void FindAll::_internal_set_token(int32_t value) {
+  
+  token_ = value;
+}
+inline void FindAll::set_token(int32_t value) {
+  _internal_set_token(value);
+  // @@protoc_insertion_point(field_set:PB.Client_Server.FindAll.token)
+}
 
 // -------------------------------------------------------------------
 
 // FindList
 
-// repeated int32 listId = 1;
+// int32 token = 1;
+inline void FindList::clear_token() {
+  token_ = 0;
+}
+inline int32_t FindList::_internal_token() const {
+  return token_;
+}
+inline int32_t FindList::token() const {
+  // @@protoc_insertion_point(field_get:PB.Client_Server.FindList.token)
+  return _internal_token();
+}
+inline void FindList::_internal_set_token(int32_t value) {
+  
+  token_ = value;
+}
+inline void FindList::set_token(int32_t value) {
+  _internal_set_token(value);
+  // @@protoc_insertion_point(field_set:PB.Client_Server.FindList.token)
+}
+
+// repeated int32 listId = 2;
 inline int FindList::_internal_listid_size() const {
   return listid_.size();
 }
@@ -1035,9 +1615,141 @@ FindList::mutable_listid() {
   return _internal_mutable_listid();
 }
 
+// -------------------------------------------------------------------
+
+// SitDown
+
+// int32 token = 1;
+inline void SitDown::clear_token() {
+  token_ = 0;
+}
+inline int32_t SitDown::_internal_token() const {
+  return token_;
+}
+inline int32_t SitDown::token() const {
+  // @@protoc_insertion_point(field_get:PB.Client_Server.SitDown.token)
+  return _internal_token();
+}
+inline void SitDown::_internal_set_token(int32_t value) {
+  
+  token_ = value;
+}
+inline void SitDown::set_token(int32_t value) {
+  _internal_set_token(value);
+  // @@protoc_insertion_point(field_set:PB.Client_Server.SitDown.token)
+}
+
+// int32 tableId = 2;
+inline void SitDown::clear_tableid() {
+  tableid_ = 0;
+}
+inline int32_t SitDown::_internal_tableid() const {
+  return tableid_;
+}
+inline int32_t SitDown::tableid() const {
+  // @@protoc_insertion_point(field_get:PB.Client_Server.SitDown.tableId)
+  return _internal_tableid();
+}
+inline void SitDown::_internal_set_tableid(int32_t value) {
+  
+  tableid_ = value;
+}
+inline void SitDown::set_tableid(int32_t value) {
+  _internal_set_tableid(value);
+  // @@protoc_insertion_point(field_set:PB.Client_Server.SitDown.tableId)
+}
+
+// int32 tableSit = 3;
+inline void SitDown::clear_tablesit() {
+  tablesit_ = 0;
+}
+inline int32_t SitDown::_internal_tablesit() const {
+  return tablesit_;
+}
+inline int32_t SitDown::tablesit() const {
+  // @@protoc_insertion_point(field_get:PB.Client_Server.SitDown.tableSit)
+  return _internal_tablesit();
+}
+inline void SitDown::_internal_set_tablesit(int32_t value) {
+  
+  tablesit_ = value;
+}
+inline void SitDown::set_tablesit(int32_t value) {
+  _internal_set_tablesit(value);
+  // @@protoc_insertion_point(field_set:PB.Client_Server.SitDown.tableSit)
+}
+
+// -------------------------------------------------------------------
+
+// Ready
+
+// int32 token = 1;
+inline void Ready::clear_token() {
+  token_ = 0;
+}
+inline int32_t Ready::_internal_token() const {
+  return token_;
+}
+inline int32_t Ready::token() const {
+  // @@protoc_insertion_point(field_get:PB.Client_Server.Ready.token)
+  return _internal_token();
+}
+inline void Ready::_internal_set_token(int32_t value) {
+  
+  token_ = value;
+}
+inline void Ready::set_token(int32_t value) {
+  _internal_set_token(value);
+  // @@protoc_insertion_point(field_set:PB.Client_Server.Ready.token)
+}
+
+// int32 tableId = 2;
+inline void Ready::clear_tableid() {
+  tableid_ = 0;
+}
+inline int32_t Ready::_internal_tableid() const {
+  return tableid_;
+}
+inline int32_t Ready::tableid() const {
+  // @@protoc_insertion_point(field_get:PB.Client_Server.Ready.tableId)
+  return _internal_tableid();
+}
+inline void Ready::_internal_set_tableid(int32_t value) {
+  
+  tableid_ = value;
+}
+inline void Ready::set_tableid(int32_t value) {
+  _internal_set_tableid(value);
+  // @@protoc_insertion_point(field_set:PB.Client_Server.Ready.tableId)
+}
+
+// int32 tableSit = 3;
+inline void Ready::clear_tablesit() {
+  tablesit_ = 0;
+}
+inline int32_t Ready::_internal_tablesit() const {
+  return tablesit_;
+}
+inline int32_t Ready::tablesit() const {
+  // @@protoc_insertion_point(field_get:PB.Client_Server.Ready.tableSit)
+  return _internal_tablesit();
+}
+inline void Ready::_internal_set_tablesit(int32_t value) {
+  
+  tablesit_ = value;
+}
+inline void Ready::set_tablesit(int32_t value) {
+  _internal_set_tablesit(value);
+  // @@protoc_insertion_point(field_set:PB.Client_Server.Ready.tableSit)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
@@ -1071,6 +1783,16 @@ template <> struct is_proto_enum< ::PB::Client_Server::FindList_MsgId> : ::std::
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::PB::Client_Server::FindList_MsgId>() {
   return ::PB::Client_Server::FindList_MsgId_descriptor();
+}
+template <> struct is_proto_enum< ::PB::Client_Server::SitDown_MsgId> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::PB::Client_Server::SitDown_MsgId>() {
+  return ::PB::Client_Server::SitDown_MsgId_descriptor();
+}
+template <> struct is_proto_enum< ::PB::Client_Server::Ready_MsgId> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::PB::Client_Server::Ready_MsgId>() {
+  return ::PB::Client_Server::Ready_MsgId_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

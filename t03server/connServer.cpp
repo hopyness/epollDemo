@@ -5,8 +5,6 @@
 #include "connServer.h"
 
 #include <arpa/inet.h>
-#include <sys/socket.h>
-#include <fcntl.h>
 #include <string.h>
 #include <netdb.h>
 #include <unistd.h>
@@ -14,9 +12,7 @@
 #include <memory>
 
 #include "connClient.h"
-#include "serverApp.h"
 
-#include "pbData.h"
 connServer::connServer() {
     lihp_fd = -1;
 }
@@ -36,17 +32,17 @@ void connServer::callbackRead() {
     char *str = inet_ntoa(clientaddr.sin_addr);
     std::cout<<str<<":"<<clientaddr.sin_port<<std::endl;
 
-    PB::Client_Server::Login t1;
-    t1.set_uname("hello");
-    t1.set_pwd("word");
-    std::string buff{};
-    t1.SerializeToString(&buff);
-    int  s=buff.length()+8;
-    int t2=PB::Client_Server::Login::Id;
-    write(connfd,&s,4);
-    write(connfd,&t2,4);
-    write(connfd,buff.c_str(),s-8);
-    pbData t;
+//    PB::Client_Server::Login t1;
+//    t1.set_uname("hello");
+//    t1.set_pwd("word");
+//    std::string buff{};
+//    t1.SerializeToString(&buff);
+//    int  s=buff.length()+8;
+//    int t2=PB::Client_Server::Login::Id;
+//    write(connfd,&s,4);
+//    write(connfd,&t2,4);
+//    write(connfd,buff.c_str(),s-8);
+//    pbData t;
 
     //
     auto xx21=std::make_shared<connClient>();
