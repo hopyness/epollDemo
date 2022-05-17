@@ -17,6 +17,7 @@ void serverApp::init() {
     epoll_fd=epoll_create1(0);
     isrun=true;
     sp_lobby = std::make_shared<lobby>();
+    sp_lobby->serverptr =this;
     std::cout<<serverApp::Rand(1,5)<<std::endl;
 }
 void serverApp::run() {

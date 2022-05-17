@@ -8,14 +8,18 @@
 lobby::lobby()
 {
     //创建两个座子
-    tabeinfo t1;
-    t1.table_player[0]=nullptr;
-    t1.table_player[1]=nullptr;
-    t1.table_player[2]=nullptr;
-    t1.table_player[3]=nullptr;
-    t1.isReady = 0;
-    tableinfo.insert(std::make_pair(1,t1));
-    tableinfo.insert(std::make_pair(2,t1));
+    //tabeinfo t1;
+    for(int i=0;i<2;i++){
+    auto t1=std::make_shared<tabeinfo>();
+    t1->table_player[0]=nullptr;
+    t1->table_player[1]=nullptr;
+    t1->table_player[2]=nullptr;
+    t1->table_player[3]=nullptr;
+    t1->isReady = 0;
+    t1->timers = nullptr;
+    tableinfo.insert(std::make_pair(i+1,t1));
+    }
+   // tableinfo.insert(std::make_pair(2,t1));
 }
 std::shared_ptr<player> lobby::addaplayer(std::shared_ptr<PB::Client_Server::Login> t)
 {
@@ -102,13 +106,13 @@ int lobby::sitDown(std::shared_ptr<PB::Client_Server::SitDown> t)
         std::cout<<"tb error"<<std::endl;
         return  -3;
     }
-    auto setx =tabe->second.table_player[tb];
+    auto setx =tabe->second->table_player[tb];
     if(setx!= nullptr)
     {
         std::cout<<"setx have player"<<std::endl;
         return  -4;
     }
-    tabe->second.table_player[tb]=xxpter->second;
+    tabe->second->table_player[tb]=xxpter->second;
 
     return  0;
 }
@@ -138,7 +142,7 @@ int lobby::Ready(std::shared_ptr<PB::Client_Server::Ready> t)
         std::cout<<"tb error"<<std::endl;
         return  -3;
     }
-    auto setx =tabe->second.table_player[tb];
+    auto setx =tabe->second->table_player[tb];
    // std::cout<<setx->tokenStr<<std::endl;
    // std::cout<<xxpter->second->tokenStr<<std::endl;
     if(setx->token != xxpter->second->token)
@@ -146,7 +150,7 @@ int lobby::Ready(std::shared_ptr<PB::Client_Server::Ready> t)
         std::cout<<" player is not equit by table"<<std::endl;
         return  -4;
     }
-
+    //需要添加 如果钱不够 入场 不能ready
     xxpter->second->isReady =1;
     doReady(ta);
     return  0;
@@ -163,15 +167,42 @@ void lobby::doReady(int ta)
     int CoutX=0;
     for(int i=0;i<4;i++)
     {
-        if(tabe->second.table_player[i] != nullptr&& tabe->second.table_player[i]->isReady ==0)
+        if(tabe->second->table_player[i] != nullptr&& tabe->second->table_player[i]->isReady ==0)
             return;
-        if(tabe->second.table_player[i] != nullptr&& tabe->second.table_player[i]->isReady ==1)
+        if(tabe->second->table_player[i] != nullptr&& tabe->second->table_player[i]->isReady ==1)
             CoutX++;
 
     }
     if(CoutX>=2)
-        tabe->second.isReady =1;
+        tabe->second->isReady =1;
     //座子准备好了
     //启动定时器 20秒后  开始 创建玩家服务？
     std::cout<<"doReady XXXXX"<<std::endl;
+    serverApp* p_app =((serverApp*)this->serverptr);
+    auto tt=std::make_shared<timer>(0, 0, 10000, [this,ta]() { this->addSerevr(ta) ;});
+    p_app->m_timerList.push_back(tt);
+    tabe->second->timers=tt;
+}
+void  lobby::addSerevr(int ta)
+{
+    auto tabe=tableinfo.find(ta);
+    if(tabe==tableinfo.end())
+    {
+        std::cout<<"can not tabe"<<std::endl;
+        return  ;
+    }
+    //这样 验证定时器是否被析构
+    tabe->second->timers = nullptr;
+
+    //时间到了 创建游戏服
+    std::cout<<"doReady addSerevr"<<ta<<std::endl;
+    /*
+     创建游戏服  创建一个游戏服务器  gs
+     绑定  gs 与 大厅关系  是大厅的哪座的
+     绑定 gs 座子的关系
+
+     初始化 游戏信息 如 30分钟座子 还是 1小时座子
+     玩家信息初始化 如  玩家钱-400  带入初始值=400
+     //第一次 做 就是直接给不用旋转  在游戏中 推送三次 每次输赢结果  就直接结束  到 gs 析构 玩家重新回到座子上 进入非准备状态
+     */
 }

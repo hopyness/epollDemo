@@ -22,11 +22,13 @@
 #include "player.h"
 #include "pbhead.h"
 //保存玩家 用玩家id  不需要用玩家指针？？
+class timer;
 struct tabeinfo
 {
     std::array< std::shared_ptr<player>, 4> table_player;
 
     int isReady =0;
+    std::shared_ptr<timer> timers;
 };
 class lobby  :public std::enable_shared_from_this<lobby>{
 public://方法
@@ -45,13 +47,18 @@ public://方法
     int Ready(std::shared_ptr<PB::Client_Server::Ready> t);
 
     void doReady(int ta);
+    void addSerevr(int ta);
 
 public: //变量
+
+    // 0  父类指针
+    void* serverptr;
     //1 玩家信息
     std::map<int , std::shared_ptr<player> > playerInfo;
     //进大厅玩家可以不在座子上  key 值 保存玩家的 token
     //1 座子信息
-    std::map<int , tabeinfo > tableinfo;
+    // 改成指针     可以把指针 传递给 游戏服
+    std::map<int , std::shared_ptr<tabeinfo> > tableinfo;
     //?? 座子状态？？
 };
 
