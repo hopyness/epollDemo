@@ -28,6 +28,8 @@ public:
     std::string unmae;
     std::string pwd;
     int64_t  money;
+
+    int  moneybet;
     int token;
     std::string tokenStr;
     //2 和其他对象的绑定

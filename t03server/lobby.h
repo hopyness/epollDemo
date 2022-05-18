@@ -23,12 +23,14 @@
 #include "pbhead.h"
 //保存玩家 用玩家id  不需要用玩家指针？？
 class timer;
+class gameserver;
 struct tabeinfo
 {
     std::array< std::shared_ptr<player>, 4> table_player;
 
     int isReady =0;
     std::shared_ptr<timer> timers;
+    std::shared_ptr<gameserver> gsX;
 };
 class lobby  :public std::enable_shared_from_this<lobby>{
 public://方法
@@ -48,6 +50,7 @@ public://方法
 
     void doReady(int ta);
     void addSerevr(int ta);
+    void delecXX(int ta);
 
 public: //变量
 

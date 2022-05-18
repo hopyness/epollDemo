@@ -4,6 +4,7 @@
 
 #include "lobby.h"
 #include "serverApp.h"
+#include "gameserver.h"
 /**/
 lobby::lobby()
 {
@@ -17,6 +18,7 @@ lobby::lobby()
     t1->table_player[3]=nullptr;
     t1->isReady = 0;
     t1->timers = nullptr;
+        t1->gsX = nullptr;
     tableinfo.insert(std::make_pair(i+1,t1));
     }
    // tableinfo.insert(std::make_pair(2,t1));
@@ -174,14 +176,16 @@ void lobby::doReady(int ta)
 
     }
     if(CoutX>=2)
-        tabe->second->isReady =1;
-    //座子准备好了
-    //启动定时器 20秒后  开始 创建玩家服务？
-    std::cout<<"doReady XXXXX"<<std::endl;
-    serverApp* p_app =((serverApp*)this->serverptr);
-    auto tt=std::make_shared<timer>(0, 0, 10000, [this,ta]() { this->addSerevr(ta) ;});
-    p_app->m_timerList.push_back(tt);
-    tabe->second->timers=tt;
+    {    tabe->second->isReady =1;
+
+        //座子准备好了
+        //启动定时器 20秒后  开始 创建玩家服务？
+        std::cout<<"doReady XXXXX"<<std::endl;
+        serverApp* p_app =((serverApp*)this->serverptr);
+        auto tt=std::make_shared<timer>(0, 0, 10000, [this,ta]() { this->addSerevr(ta) ;});
+        p_app->m_timerList.push_back(tt);
+        tabe->second->timers=tt;
+    }
 }
 void  lobby::addSerevr(int ta)
 {
@@ -205,4 +209,34 @@ void  lobby::addSerevr(int ta)
      玩家信息初始化 如  玩家钱-400  带入初始值=400
      //第一次 做 就是直接给不用旋转  在游戏中 推送三次 每次输赢结果  就直接结束  到 gs 析构 玩家重新回到座子上 进入非准备状态
      */
+    auto gs= std::make_shared<gameserver>();
+    //gs->init();
+    gs->sp_b=shared_from_this();
+    gs->serverptr=serverptr;
+    gs->taneinfo= tabe->second;
+    gs->tableid = ta;
+    gs->init();
+    tabe->second->gsX = gs;
+
+}
+
+
+
+void  lobby::delecXX(int ta) {
+    std::cout << "delecXX" <<ta<< std::endl;
+    auto tabe = tableinfo.find(ta);
+    if (tabe == tableinfo.end()) {
+        std::cout << "can not tabe" << std::endl;
+        return;
+    }
+    tabe->second->gsX = nullptr;
+    std::cout << "delecXX" << std::endl;
+    tabe->second->isReady =0;
+    for(auto tt: tabe->second->table_player)
+    {
+        if(tt!= nullptr)
+        {
+            tt->isReady =0;
+        }
+    }
 }

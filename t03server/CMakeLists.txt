@@ -18,6 +18,9 @@ add_executable( t03server
         connClient.cpp
         timer.cpp
         lobby.cpp
+        gameserver.cpp
+
+
 
         main.cpp
 
